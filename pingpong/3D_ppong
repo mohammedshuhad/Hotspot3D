@@ -1,0 +1,182 @@
+#include "3D.h"
+
+/* chip parameters	*/
+/* ambient temperature, assuming no package at all	*/
+
+//////////////////////////////////////////////   Hotspot Function ////////////////////////////
+
+void hotspot3D(float pIn[TILE_LAYERS * GRID_ROWS * GRID_COLS], float tIn[(TILE_LAYERS + 2) * (GRID_ROWS)*GRID_COLS], float tOut[TILE_LAYERS * GRID_ROWS * GRID_COLS], int layers)
+{
+    
+    int  w, e, n, s, b, t;
+    int z,r,c;
+  
+    for (  z = 0 ;  z < TILE_LAYERS ; z++)
+        for ( r = 0; r < GRID_ROWS; r++)
+        
+            for ( c = 0; c < GRID_COLS; c++) {
+                
+                float center = tIn[GRID_COLS*GRID_ROWS + z * GRID_ROWS * GRID_COLS  + r * GRID_COLS + c];
+
+                float top = ((layers == TOP) && z == 0) ? center : tIn[GRID_COLS*GRID_ROWS + (z-1) * GRID_ROWS * GRID_COLS  + r * GRID_COLS + c];
+                float bottom = ((layers == BOTTOM) && z == TILE_LAYERS-1) ? center : tIn[GRID_COLS*GRID_ROWS + (z+1) * GRID_ROWS * GRID_COLS  + r * GRID_COLS + c];
+
+
+                float west = ((c ==0 ) ? center : tIn[GRID_COLS*GRID_ROWS + z * GRID_ROWS * GRID_COLS  + r * GRID_COLS + c-1] );
+                float east = ((c ==GRID_COLS-1 ) ? center : tIn[GRID_COLS*GRID_ROWS + z * GRID_ROWS * GRID_COLS  + r * GRID_COLS + c+1] );
+
+                float north = ((r ==0 ) ? center : tIn[GRID_COLS*GRID_ROWS + z * GRID_ROWS * GRID_COLS  + (r-1) * GRID_COLS + c] );
+                float south = ((r ==GRID_ROWS-1 ) ? center : tIn[GRID_COLS*GRID_ROWS + z * GRID_ROWS * GRID_COLS  + (r+1) * GRID_COLS + c] );
+
+                
+                tOut[z * GRID_ROWS * GRID_COLS  + r * GRID_COLS + c] = center * cc + north * cn + south * cs + east * ce + west * cw + bottom * ct + top * cb + (dt / Cap) * pIn[z * GRID_ROWS * GRID_COLS  + r * GRID_COLS + c] + ct * AMB_TEMP;
+
+        }
+}
+
+
+
+
+//////////////////////////////////////////////  Helper Functions    ////////////////////////////
+
+// LOAD
+void buffer_load(int flag, float *temp_inner, float *power_inner, float *tempIn, float *powerIn, int l )
+{
+    if (flag) {
+		
+        memcpy(temp_inner, tempIn + (l * TILE_LAYERS * GRID_ROWS * GRID_COLS) - (GRID_ROWS * GRID_COLS), sizeof(float) * (TILE_LAYERS+2) * (GRID_ROWS)*GRID_COLS);
+
+        memcpy(power_inner, powerIn + (l * TILE_LAYERS * GRID_ROWS * GRID_COLS), sizeof(float) * TILE_LAYERS * GRID_ROWS * GRID_COLS);
+	}
+    return;
+}
+
+// COMPUTE
+void buffer_compute(int flag, float *power_inner, float *temp_inner,  float *result_inner, int l )
+{
+    if (flag) {
+        hotspot3D(power_inner, temp_inner, result_inner, l);
+	}
+    return;
+}
+
+// STORE
+void buffer_store(int flag, float *tempOut, float *result_inner, int l )
+{
+    if (flag) 
+        memcpy(tempOut + l * TILE_LAYERS * GRID_ROWS * GRID_COLS, result_inner, sizeof(float) * TILE_LAYERS * GRID_ROWS * GRID_COLS);
+    return;
+}
+
+
+
+//////////////////////////////////////////////   Workload Function ////////////////////////////
+
+
+
+void workload(float powerIn[GRID_ROWS * GRID_COLS * GRID_LAYERS],
+              float tempIn[GRID_ROWS * GRID_COLS * GRID_LAYERS],
+              float tempOut[GRID_ROWS * GRID_COLS * GRID_LAYERS])
+{
+
+//////////////////////////////////////////////   PIPELINE  ////////////////////////////
+
+
+    #pragma HLS INTERFACE m_axi port = tempIn offset = slave bundle = gmem
+    #pragma HLS INTERFACE m_axi port = powerIn offset = slave bundle = gmem
+    #pragma HLS INTERFACE m_axi port = tempOut offset = slave bundle = gmem
+
+    #pragma HLS INTERFACE s_axilite port = tempIn bundle = control
+    #pragma HLS INTERFACE s_axilite port = powerIn bundle = control
+    #pragma HLS INTERFACE s_axilite port = tempOut bundle = control
+
+    #pragma HLS INTERFACE s_axilite port = return bundle = control
+
+
+
+//////////////////////////////////////////////  BUFFERS   ////////////////////////////
+
+    float result_inner0[TILE_LAYERS * GRID_ROWS * GRID_COLS];
+#pragma HLS array_partition variable=result_inner0 cyclic factor=16
+    float temp_inner0[(TILE_LAYERS + 2) * (GRID_ROWS)*GRID_COLS];
+#pragma HLS array_partition variable=temp_inner0   cyclic factor=16
+    float power_inner0[TILE_LAYERS * GRID_ROWS * GRID_COLS];
+#pragma HLS array_partition variable=power_inner0  cyclic factor=16
+
+
+    float result_inner1[TILE_LAYERS * GRID_ROWS * GRID_COLS];
+#pragma HLS array_partition variable=result_inner1 cyclic factor=16
+    float temp_inner1[(TILE_LAYERS + 2) * (GRID_ROWS)*GRID_COLS];
+#pragma HLS array_partition variable=temp_inner1   cyclic factor=16
+    float power_inner1[TILE_LAYERS * GRID_ROWS * GRID_COLS];
+#pragma HLS array_partition variable=power_inner1  cyclic factor=16
+
+
+    float result_inner2[TILE_LAYERS * GRID_ROWS * GRID_COLS];
+#pragma HLS array_partition variable=result_inner2 cyclic factor=16
+    float temp_inner2[(TILE_LAYERS + 2) * (GRID_ROWS)*GRID_COLS];
+#pragma HLS array_partition variable=temp_inner2   cyclic factor=16
+    float power_inner2[TILE_LAYERS * GRID_ROWS * GRID_COLS];
+#pragma HLS array_partition variable=power_inner2  cyclic factor=16
+
+
+
+
+//////////////////////////////////////////////  Buffer Functions    ////////////////////////////
+
+    // float grid_height = CHIP_HEIGHT / GRID_ROWS;
+    // float grid_width = CHIP_WIDTH / GRID_ROWS;
+    int i;
+
+    for ( i = 0; i < ITERATIONS/2 ; i++)
+        {
+        // Linearizing 3D array -> index (z * xMax * yMax) + (y * xMax) + x;
+        int l;
+        // int rows; 
+        
+        for (l = 0; l < NUM_LAYER_TILES +2; l++){
+            int load_flag = l >= 0 && l < GRID_LAYERS / TILE_LAYERS;
+            int compute_flag = l >= 1 && l < GRID_LAYERS / TILE_LAYERS + 1;
+            int store_flag = l >= 2 && l < GRID_LAYERS / TILE_LAYERS + 2;
+
+        if (l % 3 == 0) {
+            buffer_load(load_flag, temp_inner0, power_inner0, tempIn,  powerIn, l);
+            buffer_compute(compute_flag, power_inner2, temp_inner2, result_inner2,l - 1);
+            buffer_store(store_flag, tempOut, result_inner1, l-2);
+        } else if (l % 3 == 1) {
+            buffer_load(load_flag, temp_inner1, power_inner1, tempIn,  powerIn, l);
+            buffer_compute(compute_flag, power_inner0, temp_inner0, result_inner0,l - 1);
+            buffer_store(store_flag, tempOut, result_inner2, l-2);
+        } else {
+            buffer_load(load_flag, temp_inner2, power_inner2, tempIn,  powerIn, l);
+            buffer_compute(compute_flag, power_inner1, temp_inner1, result_inner1,l - 1);
+            buffer_store(store_flag, tempOut, result_inner0, l-2);
+        }
+        }
+        
+        for (l = 0; l < NUM_LAYER_TILES +2 ; l++){
+            int load_flag = l >= 0 && l < GRID_LAYERS / TILE_LAYERS;
+            int compute_flag = l >= 1 && l < GRID_LAYERS / TILE_LAYERS + 1;
+            int store_flag = l >= 2 && l < GRID_LAYERS / TILE_LAYERS + 2;
+
+        if (l % 3 == 0) {
+            buffer_load(load_flag, temp_inner0, power_inner0, tempIn,  powerIn, l);
+            buffer_compute(compute_flag, power_inner2, temp_inner2, result_inner2,l - 1);
+            buffer_store(store_flag, tempOut, result_inner1, l-2);
+        } else if (l % 3 == 1) {
+            buffer_load(load_flag, temp_inner1, power_inner1, tempIn,  powerIn, l);
+            buffer_compute(compute_flag, power_inner0, temp_inner0, result_inner0,l - 1);
+            buffer_store(store_flag, tempOut, result_inner2, l-2);
+        } else {
+            buffer_load(load_flag, temp_inner2, power_inner2, tempIn,  powerIn, l);
+            buffer_compute(compute_flag, power_inner1, temp_inner1, result_inner1,l - 1);
+            buffer_store(store_flag, tempOut, result_inner0, l-2);
+        }
+        }
+
+    } 
+    //memcpy(tempOut,tempIn , sizeof(float) * GRID_ROWS * GRID_LAYERS * GRID_COLS);
+
+    return;
+}
+

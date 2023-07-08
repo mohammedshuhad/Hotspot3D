@@ -1,0 +1,480 @@
+
+****** Vitis HLS - High-Level Synthesis from C, C++ and OpenCL v2020.2.2 (64-bit)
+  **** SW Build 3118627 on Tue Feb  9 05:13:49 MST 2021
+  **** IP Build 3115676 on Tue Feb  9 10:48:11 MST 2021
+    ** Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+
+source /cvmfs/rcg.sfu.ca/sw/env/neutral/x86_64/TOOLS/XILINX/V2020.2/Vitis_HLS/2020.2/scripts/vitis_hls/hls.tcl -notrace
+INFO: Applying HLS Y2K22 patch v1.2 for IP revision
+INFO: [HLS 200-10] Running '/cvmfs/rcg.sfu.ca/sw/env/neutral/x86_64/TOOLS/XILINX/V2020.2/Vitis_HLS/2020.2/bin/unwrapped/lnx64.o/vitis_hls'
+INFO: [HLS 200-10] For user 'asa280' on host 'ensc-mmc-16.engineering.sfu.ca' (Linux_x86_64 version 5.4.0-125-generic) on Sun Nov 27 04:51:52 PST 2022
+INFO: [HLS 200-10] On os Ubuntu 18.04.6 LTS
+INFO: [HLS 200-10] In directory '/local-scratch/localhome/asa280/hotspot3d/comp-opt'
+Sourcing Tcl script 'run_hls.tcl'
+INFO: [HLS 200-1510] Running: open_project 3D.prj -reset 
+INFO: [HLS 200-10] Opening and resetting project '/local-scratch/localhome/asa280/hotspot3d/comp-opt/3D.prj'.
+WARNING: [HLS 200-40] No /local-scratch/localhome/asa280/hotspot3d/comp-opt/3D.prj/solution1/solution1.aps file found.
+INFO: [HLS 200-1510] Running: set_top workload 
+INFO: [HLS 200-1510] Running: add_files 3D.cpp 
+INFO: [HLS 200-10] Adding design file '3D.cpp' to the project
+INFO: [HLS 200-1510] Running: add_files -tb 3D_test.cpp debug_power_10x4 debug_temp_10x4 
+INFO: [HLS 200-10] Adding test bench file '3D_test.cpp' to the project
+INFO: [HLS 200-10] Adding test bench file 'debug_power_10x4' to the project
+INFO: [HLS 200-10] Adding test bench file 'debug_temp_10x4' to the project
+INFO: [HLS 200-1510] Running: open_solution solution1 
+INFO: [HLS 200-10] Creating and opening solution '/local-scratch/localhome/asa280/hotspot3d/comp-opt/3D.prj/solution1'.
+INFO: [HLS 200-1505] Using default flow_target 'vivado'
+Resolution: For help on HLS 200-1505 see www.xilinx.com/cgi-bin/docs/rdoc?v=2020.2;t=hls+guidance;d=200-1505.html
+INFO: [HLS 200-1510] Running: set_part xcu50-fsvh2104-2-e 
+INFO: [HLS 200-10] Setting target device to 'xcu50-fsvh2104-2-e'
+INFO: [HLS 200-1510] Running: create_clock -period 3.33 
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 3.33ns.
+INFO: [HLS 200-1510] Running: csim_design 
+INFO: [SIM 211-2] *************** CSIM start ***************
+INFO: [SIM 211-4] CSIM will launch GCC as the compiler.
+   Compiling ../../../../3D_test.cpp in debug mode
+   Compiling ../../../../3D.cpp in debug mode
+   Generating csim.exe
+../../../../3D_test.cpp: In function ‘void readinput(float*, int, int, int, char*)’:
+../../../../3D_test.cpp:55:40: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+       fatal( "The file was not opened" );
+                                        ^
+../../../../3D_test.cpp:60:79: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+             if (fgets(str, STR_SIZE, fp) == NULL) fatal("Error reading file\n");
+                                                                               ^
+../../../../3D_test.cpp:62:47: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+               fatal("not enough lines in file");
+                                               ^
+../../../../3D_test.cpp:64:42: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+               fatal("invalid file format");
+                                          ^
+../../../../3D_test.cpp: In function ‘int main()’:
+../../../../3D_test.cpp:143:13: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+     pfile = "debug_power_10x4";
+             ^~~~~~~~~~~~~~~~~~
+../../../../3D_test.cpp:144:13: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+     tfile = "debug_temp_10x4";
+             ^~~~~~~~~~~~~~~~~
+../../../../3D_test.cpp:145:13: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+     ofile = "output.out";
+             ^~~~~~~~~~~~
+Error: not enough lines in file
+Error: not enough lines in file
+temp_west = 339.354736    
+ temp_west = 339.354736    
+ temp_west = 320.888977    
+ temp_west = 320.888977    
+ temp_west = 326.227692    
+ temp_west = 326.227692    
+ temp_west = 321.183624    
+ temp_west = 321.183624    
+ temp_west = 320.210968    
+ temp_west = 320.210968    
+ temp_west = 328.577881    
+ temp_west = 328.577881    
+ temp_west = 327.255829    
+ temp_west = 327.255829    
+ temp_west = 332.962921    
+ temp_west = 332.962921    
+ temp_west = 323.711578    
+ temp_west = 323.711578    
+ temp_west = 336.730316    
+ temp_west = 336.730316    
+ temp_west = 335.176697    
+ temp_west = 335.176697    
+ temp_west = 327.380951    
+ temp_west = 327.380951    
+ temp_west = 336.263641    
+ temp_west = 336.263641    
+ temp_west = 336.622101    
+ temp_west = 336.622101    
+ temp_west = 328.987701    
+ temp_west = 328.987701    
+ temp_west = 326.521759    
+ temp_west = 326.521759    
+ temp_west = 329.338806    
+ temp_west = 329.338806    
+ temp_west = 333.717224    
+ temp_west = 333.717224    
+ temp_west = 320.058167    
+ temp_west = 320.058167    
+ temp_west = 332.342316    
+ temp_west = 332.342316    
+ temp_west = 325.486908    
+ temp_west = 325.486908    
+ temp_west = 337.252289    
+ temp_west = 337.252289    
+ temp_west = 329.134308    
+ temp_west = 329.134308    
+ temp_west = 323.485535    
+ temp_west = 323.485535    
+ temp_west = 332.274078    
+ temp_west = 332.274078    
+ temp_west = 336.144226    
+ temp_west = 336.144226    
+ temp_west = 335.963226    
+ temp_west = 335.963226    
+ temp_west = 326.619446    
+ temp_west = 326.619446    
+ temp_west = 322.182556    
+ temp_west = 322.182556    
+ temp_west = 333.432007    
+ temp_west = 333.432007    
+ temp_west = 334.574127    
+ temp_west = 334.574127    
+ temp_west = 336.324432    
+ temp_west = 336.324432    
+ temp_west = 324.835083    
+ temp_west = 324.835083    
+ temp_west = 337.698059    
+ temp_west = 337.698059    
+ temp_west = 329.614410    
+ temp_west = 329.614410    
+ temp_west = 339.495789    
+ temp_west = 339.495789    
+ temp_west = 329.237244    
+ temp_west = 329.237244    
+ temp_west = 322.757721    
+ temp_west = 322.757721    
+ temp_west = 320.653503    
+ temp_west = 320.653503    
+ temp_west = 327.569733    
+ temp_west = 327.569733    
+ temp_west = 336.053009    
+ temp_west = 336.053009    
+ temp_west = 329.641174    
+ temp_west = 329.641174    
+ temp_west = 331.389099    
+ temp_west = 331.389099    
+ temp_west = 328.257446    
+ temp_west = 328.257446    
+ temp_west = 326.385040    
+ temp_west = 326.385040    
+ temp_west = 320.464386    
+ temp_west = 320.464386    
+ temp_west = 328.857391    
+ temp_west = 328.857391    
+ temp_west = 328.141693    
+ temp_west = 328.141693    
+ temp_west = 323.838409    
+ temp_west = 323.838409    
+ temp_west = 332.781982    
+ temp_west = 332.781982    
+ temp_west = 334.737305    
+ temp_west = 334.737305    
+ temp_west = 332.054108    
+ temp_west = 332.054108    
+ temp_west = 321.295563    
+ temp_west = 321.295563    
+ temp_west = 326.052795    
+ temp_west = 326.052795    
+ temp_west = 335.922699    
+ temp_west = 335.922699    
+ temp_west = 324.645844    
+ temp_west = 324.645844    
+ temp_west = 322.385345    
+ temp_west = 322.385345    
+ temp_west = 331.562988    
+ temp_west = 331.562988    
+ temp_west = 322.923492    
+ temp_west = 322.923492    
+ temp_west = 322.013580    
+ temp_west = 322.013580    
+ temp_west = 330.437836    
+ temp_west = 330.437836    
+ temp_west = 335.055206    
+ temp_west = 335.055206    
+ temp_west = 328.920563    
+ temp_west = 328.920563    
+ temp_west = 322.907349    
+ temp_west = 322.907349    
+ temp_west = 329.506195    
+ temp_west = 329.506195    
+ temp_west = 338.713409    
+ temp_west = 338.713409    
+ temp_west = 334.192810    
+ temp_west = 334.192810    
+ temp_west = 326.449005    
+ temp_west = 326.449005    
+ temp_west = 331.029907    
+ temp_west = 331.029907    
+ temp_west = 332.531616    
+ temp_west = 332.531616    
+ temp_west = 327.516327    
+ temp_west = 327.516327    
+ temp_west = 335.406647    
+ temp_west = 335.406647    
+ temp_west = 321.083710    
+ temp_west = 321.083710    
+ temp_west = 335.974823    
+ temp_west = 335.974823    
+ temp_west = 330.016052    
+ temp_west = 330.016052    
+ temp_west = 328.079773    
+ temp_west = 328.079773    
+ temp_west = 330.474274    
+ temp_west = 330.474274    
+ temp_west = 331.507568    
+ temp_west = 331.507568    
+ temp_west = 334.363129    
+ temp_west = 334.363129    
+ temp_west = 336.545868    
+ temp_west = 336.545868    
+ temp_west = 321.340393    
+ temp_west = 321.340393    
+ temp_west = 334.016235    
+ temp_west = 334.016235    
+ temp_west = 336.909241    
+ temp_west = 336.909241    
+ temp_west = 339.746490    
+ temp_west = 339.746490    
+ temp_west = 320.578583    
+ temp_west = 320.578583    
+ temp_west = 331.551300    
+ temp_west = 331.551300    
+ temp_west = 337.161377    
+ temp_west = 337.161377    
+ temp_west = 325.721680    
+ temp_west = 325.721680    
+ temp_west = 331.031586    
+ temp_west = 331.031586    
+ temp_west = 327.624237    
+ temp_west = 327.624237    
+ temp_west = 325.717041    
+ temp_west = 325.717041    
+ temp_west = 323.426727    
+ temp_west = 323.426727    
+ temp_west = 322.914642    
+ temp_west = 322.914642    
+ temp_west = 326.595703    
+ temp_west = 326.595703    
+ temp_west = 327.759277    
+ temp_west = 327.759277    
+ temp_west = 326.431519    
+ temp_west = 326.431519    
+ temp_west = 337.564697    
+ temp_west = 337.564697    
+ temp_west = 336.780457    
+ temp_west = 336.780457    
+ temp_west = 321.168518    
+ temp_west = 321.168518    
+ temp_west = 332.866058    
+ temp_west = 332.866058    
+ temp_west = 332.556274    
+ temp_west = 332.556274    
+ temp_west = 331.893677    
+ temp_west = 331.893677    
+ temp_west = 326.691711    
+ temp_west = 326.691711    
+ temp_west = 329.174561    
+ temp_west = 329.174561    
+ temp_west = 338.597321    
+ temp_west = 338.597321    
+ temp_west = 324.688232    
+ temp_west = 324.688232    
+ temp_west = 320.895538    
+ temp_west = 320.895538    
+ temp_west = 329.481598    
+ temp_west = 329.481598    
+ temp_west = 323.744690    
+ temp_west = 323.744690    
+ temp_west = 330.416107    
+ temp_west = 330.416107    
+ temp_west = 324.472260    
+ temp_west = 324.472260    
+ temp_west = 322.102234    
+ temp_west = 322.102234    
+ temp_west = 333.914490    
+ temp_west = 333.914490    
+ temp_west = 333.964966    
+ temp_west = 333.964966    
+ temp_west = 339.788910    
+ temp_west = 339.788910    
+ temp_west = 333.964111    
+ temp_west = 333.964111    
+ temp_west = 337.953491    
+ temp_west = 337.953491    
+ temp_west = 336.597107    
+ temp_west = 336.597107    
+ temp_west = 337.063721    
+ temp_west = 337.063721    
+ temp_west = 336.525726    
+ temp_west = 336.525726    
+ temp_west = 327.416626    
+ temp_west = 327.416626    
+ temp_west = 329.895447    
+ temp_west = 329.895447    
+ temp_west = 328.413940    
+ temp_west = 328.413940    
+ temp_west = 323.028687    
+ temp_west = 323.028687    
+ temp_west = 322.761444    
+ temp_west = 322.761444    
+ temp_west = 322.072449    
+ temp_west = 322.072449    
+ temp_west = 330.537628    
+ temp_west = 330.537628    
+ temp_west = 330.246429    
+ temp_west = 330.246429    
+ temp_west = 334.110443    
+ temp_west = 334.110443    
+ temp_west = 320.048950    
+ temp_west = 320.048950    
+ temp_west = 320.150909    
+ temp_west = 320.150909    
+ temp_west = 322.908264    
+ temp_west = 322.908264    
+ temp_west = 324.361786    
+ temp_west = 324.361786    
+ temp_west = 328.342834    
+ temp_west = 328.342834    
+ temp_west = 320.600342    
+ temp_west = 320.600342    
+ temp_west = 322.040100    
+ temp_west = 322.040100    
+ temp_west = 329.993866    
+ temp_west = 329.993866    
+ temp_west = 322.841125    
+ temp_west = 322.841125    
+ temp_west = 326.491669    
+ temp_west = 326.491669    
+ temp_west = 320.274506    
+ temp_west = 320.274506    
+ temp_west = 323.847137    
+ temp_west = 323.847137    
+ temp_west = 325.554138    
+ temp_west = 325.554138    
+ temp_west = 320.513458    
+ temp_west = 320.513458    
+ temp_west = 320.461639    
+ temp_west = 320.461639    
+ temp_west = 333.065491    
+ temp_west = 333.065491    
+ temp_west = 332.707062    
+ temp_west = 332.707062    
+ temp_west = 328.350739    
+ temp_west = 328.350739    
+ temp_west = 335.403870    
+ temp_west = 335.403870    
+ temp_west = 323.766266    
+ temp_west = 323.766266    
+ temp_west = 320.973022    
+ temp_west = 320.973022    
+ temp_west = 339.525726    
+ temp_west = 339.525726    
+ temp_west = 337.987213    
+ temp_west = 337.987213    
+ temp_west = 321.604553    
+ temp_west = 321.604553    
+ temp_west = 329.945221    
+ temp_west = 329.945221    
+ temp_west = 330.928406    
+ temp_west = 330.928406    
+ temp_west = 325.777344    
+ temp_west = 325.777344    
+ temp_west = 324.514832    
+ temp_west = 324.514832    
+ temp_west = 339.535767    
+ temp_west = 339.535767    
+ temp_west = 326.815125    
+ temp_west = 326.815125    
+ temp_west = 333.758423    
+ temp_west = 333.758423    
+ temp_west = 320.432922    
+ temp_west = 320.432922    
+ temp_west = 328.672424    
+ temp_west = 328.672424    
+ temp_west = 325.293945    
+ temp_west = 325.293945    
+ temp_west = 335.778107    
+ temp_west = 335.778107    
+ temp_west = 328.540680    
+ temp_west = 328.540680    
+ temp_west = 333.817902    
+ temp_west = 333.817902    
+ temp_west = 323.769501    
+ temp_west = 323.769501    
+ temp_west = 335.678558    
+ temp_west = 335.678558    
+ temp_west = 324.104858    
+ temp_west = 324.104858    
+ temp_west = 325.750397    
+ temp_west = 325.750397    
+ temp_west = 330.759064    
+ temp_west = 330.759064    
+ temp_west = 329.827576    
+ temp_west = 329.827576    
+ temp_west = 322.209473    
+ temp_west = 322.209473    
+ temp_west = 325.366058    
+ temp_west = 325.366058    
+ temp_west = 339.769470    
+ temp_west = 339.769470    
+ temp_west = 323.386261    
+ temp_west = 323.386261    
+ temp_west = 322.119873    
+ temp_west = 322.119873    
+ temp_west = 333.212799    
+ temp_west = 333.212799    
+ temp_west = 330.957733    
+ temp_west = 330.957733    
+ temp_west = 323.760742    
+ temp_west = 323.760742    
+ temp_west = 329.950043    
+ temp_west = 329.950043    
+ temp_west = 339.180939    
+ temp_west = 339.180939    
+ temp_west = 320.753815    
+ temp_west = 320.753815    
+ temp_west = 330.669525    
+ temp_west = 330.669525    
+ temp_west = 324.006989    
+ temp_west = 324.006989    
+ temp_west = 324.546112    
+ temp_west = 324.546112    
+ temp_west = 320.604492    
+ temp_west = 320.604492    
+ temp_west = 329.039825    
+ temp_west = 329.039825    
+ temp_west = 321.041046    
+ temp_west = 321.041046    
+ temp_west = 330.991028    
+ temp_west = 330.991028    
+ temp_west = 329.872742    
+ temp_west = 329.872742    
+ temp_west = 339.528748    
+ temp_west = 339.528748    
+ temp_west = 339.415741    
+ temp_west = 339.415741    
+ temp_west = 333.565582    
+ temp_west = 333.565582    
+ temp_west = 333.647888    
+ temp_west = 333.647888    
+ temp_west = 331.197632    
+ temp_west = 331.197632    
+ temp_west = 321.203827    
+ temp_west = 321.203827    
+ temp_west = 334.741180    
+ temp_west = 334.741180    
+ temp_west = 325.203918    
+ temp_west = 325.203918    
+ temp_west = 327.340790    
+ temp_west = 327.340790    
+ Time for sequential   run : 0.000 (s)
+Time for parallelized run : 0.000 (s)
+Accuracy: 4.595480e-04
+Speedup = 0.017 
+
+TEST PASSED
+@E Simulation failed.
+ERROR: [SIM 211-100] CSim failed with errors.
+INFO: [SIM 211-3] *************** CSIM finish ***************
+INFO: [HLS 200-111] Finished Command csim_design CPU user time: 0.47 seconds. CPU system time: 0.3 seconds. Elapsed time: 0.8 seconds; current allocated memory: 195.923 MB.
+4
+    while executing
+"source run_hls.tcl"
+    ("uplevel" body line 1)
+    invoked from within
+"uplevel \#0 [list source $arg] "
+
+INFO: [Common 17-206] Exiting vitis_hls at Sun Nov 27 04:51:55 2022...
